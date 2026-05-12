@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HeadUpDisplayUI
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: e146877771eadad43896b09825337cb6, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: LC_TO_HMD_Distance
+    value: 
+    objectReference: {fileID: 3598901821937592578, guid: e19a5790297eb3942b4ae5c5a15c3c74, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LC_RC_Distance
+    value: 
+    objectReference: {fileID: 1186746393604363012, guid: e19a5790297eb3942b4ae5c5a15c3c74, type: 3}
+  - target: {fileID: 0}
+    propertyPath: RC_TO_HMD_Distance
+    value: 
+    objectReference: {fileID: 6218149671184874317, guid: e19a5790297eb3942b4ae5c5a15c3c74, type: 3}
+  - target: {fileID: 0}
+    propertyPath: HMD_Position
+    value: 
+    objectReference: {fileID: 3424255250259660804, guid: e19a5790297eb3942b4ae5c5a15c3c74, type: 3}
+  - target: {fileID: 0}
+    propertyPath: HMD_Rotation
+    value: 
+    objectReference: {fileID: 7036054115934027738, guid: e19a5790297eb3942b4ae5c5a15c3c74, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LC_TO_HMD_Distance_Value
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: LC_RC_Distance_Value
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: RC_TO_HMD_Distance_Value
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Position_Value.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Position_Value.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Position_Value.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Rotation_Value.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Rotation_Value.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Rotation_Value.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_VMagnitud_Value
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: HMD_Velocity_Value
+    value: 0
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []

@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LeftControllerUI
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: cea4e78830c278445a98159229189f9e, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: TriggerButton
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: GripButton
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: AButton
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BButton
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: MenuButton
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickButton
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickNorthPos
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickSouthPos
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickWestPos
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickEastPos
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickNorthDepth
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickSouthDepth
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickWestDepth
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickEastDepth
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Position.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Position.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Position.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Rotation.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Rotation.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Rotation.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Velocity.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Velocity.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Velocity.z
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: VelocityMagnitud
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: StickRadius
+    value: 1.4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Stick_XPos
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Stick_YPos
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: TMP_TriggerDepth
+    value: 
+    objectReference: {fileID: 6290816169991457914, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_GripDepth
+    value: 
+    objectReference: {fileID: 5649176862163926160, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: StickNorthDepth_Text
+    value: 
+    objectReference: {fileID: 3939513064347465801, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: StickSouthDepth_Text
+    value: 
+    objectReference: {fileID: 1443245930080120579, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: StickWestDepth_Text
+    value: 
+    objectReference: {fileID: 2570351444726513019, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: StickEastDepth_Text
+    value: 
+    objectReference: {fileID: 5592466122860133458, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TriggerDepth
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: GripDepth
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: TMP_Position
+    value: 
+    objectReference: {fileID: 338395343656838649, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Rotation
+    value: 
+    objectReference: {fileID: 2974706463745389243, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Velocity
+    value: 
+    objectReference: {fileID: 6688280270518230952, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Velocity_Manitude
+    value: 
+    objectReference: {fileID: 2457864116764159206, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.size
+    value: 11
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[0]
+    value: 
+    objectReference: {fileID: 3122975191807955713, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[1]
+    value: 
+    objectReference: {fileID: 5854942597338494913, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[2]
+    value: 
+    objectReference: {fileID: 5769953840723487631, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[3]
+    value: 
+    objectReference: {fileID: 2717678300123089998, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[4]
+    value: 
+    objectReference: {fileID: 2177746975136082252, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[5]
+    value: 
+    objectReference: {fileID: 7223436804405698283, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[6]
+    value: 
+    objectReference: {fileID: 9206002002287657201, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[7]
+    value: 
+    objectReference: {fileID: 1749429772532531746, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[8]
+    value: 
+    objectReference: {fileID: 3901725656629146398, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[9]
+    value: 
+    objectReference: {fileID: 7410769766120799069, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerButtonsStates_GOs.Array.data[10]
+    value: 
+    objectReference: {fileID: 7633892317801303204, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerSlidersDepth_GOs.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerSlidersDepth_GOs.Array.data[0]
+    value: 
+    objectReference: {fileID: 3378214660969442357, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerSlidersDepth_GOs.Array.data[1]
+    value: 
+    objectReference: {fileID: 2048438322768522142, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: LeftControllerStick_GO
+    value: 
+    objectReference: {fileID: 9206002002287657201, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Stick_NorthSector
+    value: 
+    objectReference: {fileID: 3939513064347465801, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Stick_SouthSector
+    value: 
+    objectReference: {fileID: 1443245930080120579, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Stick_WestSector
+    value: 
+    objectReference: {fileID: 2570351444726513019, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: TMP_Stick_EastSector
+    value: 
+    objectReference: {fileID: 5592466122860133458, guid: 5cff0fe5400836b45a1803ce966c328d, type: 3}
+  m_ExcludedProperties: []
