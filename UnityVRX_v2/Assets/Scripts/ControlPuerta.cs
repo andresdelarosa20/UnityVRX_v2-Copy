@@ -2,17 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/// <summary>
-/// Controla la puerta para un juego XR.
-/// 
-/// SETUP REQUERIDO EN UNITY:
-/// 1. Agrega este script al GameObject de la puerta.
-/// 2. Agrega el componente "XR Simple Interactable" a la puerta.
-/// 3. Asegúrate de tener un Collider (no trigger) en la puerta para que el Ray la detecte.
-/// 4. En el XR Ray Interactor de tu control, asegúrate de que Interaction Layer Mask incluya "Default".
-/// 5. Conecta el evento: XRSimpleInteractable → OnSelectEntered → ControlPuerta.AlternarPuerta()
-///    (o déjalo automático, el script lo conecta en Awake).
-/// </summary>
 [RequireComponent(typeof(XRSimpleInteractable))]
 public class ControlPuerta : MonoBehaviour
 {
@@ -180,6 +169,9 @@ public class ControlPuerta : MonoBehaviour
     /// <summary>
     /// Desbloquea y abre la puerta. Llamado por GestorRecolectables al completar colección.
     /// </summary>
+    /// 
+
+
     public void AbrirPuerta()
     {
         puedoAbrir = true;
@@ -187,7 +179,7 @@ public class ControlPuerta : MonoBehaviour
         if (estaAbierta) return;
         estaAbierta = true;
 
-        Debug.Log("[ControlPuerta] ¡Abriendo puerta! 🚪✅");
+        Debug.Log("[ControlPuerta] Abriendo puerta");
         ReproducirSonido(sonidoAbrir);
 
         if (animadorPuerta != null)

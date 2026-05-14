@@ -2,11 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Singleton que lleva la cuenta de los objetos recolectados.
-/// Soporta múltiples puertas, cada una con su propio requisito de objetos.
-/// Coloca este script en un GameObject vacío llamado "GestorRecolectables" en la escena.
-/// </summary>
+
 public class GestorRecolectables : MonoBehaviour
 {
     // ── Singleton ─────────────────────────────────────────────────────────────
