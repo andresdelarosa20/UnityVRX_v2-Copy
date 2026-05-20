@@ -1,105 +1,86 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-/// <summary>
-/// Controla la puerta para un juego XR.
-/// 
-/// SETUP REQUERIDO EN UNITY:
-/// 1. Agrega este script al GameObject de la puerta.
-/// 2. Agrega el componente "XR Simple Interactable" a la puerta.
-/// 3. Asegúrate de tener un Collider (no trigger) en la puerta para que el Ray la detecte.
-/// 4. En el XR Ray Interactor de tu control, asegúrate de que Interaction Layer Mask incluya "Default".
-/// 5. Conecta el evento: XRSimpleInteractable → OnSelectEntered → ControlPuerta.AlternarPuerta()
-///    (o déjalo automático, el script lo conecta en Awake).
-/// </summary>
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONTROL PUERTA — Comportamiento individual de cada puerta
+// ─────────────────────────────────────────────────────────────────────────────
+// Responsabilidades:
+//   · Reaccionar a la interacción XR (ray + trigger del control).
+//   · Ejecutar la animación de apertura y cierre via Animator.
+//   · Notificar al GameManager los eventos de sonido.
+//     → El GameManager ordena al ControladorSonidos qué reproducir.
+//
+// Lo que NO hace este script:
+//   · NO llama al ControladorSonidos directamente.
+//   · NO conoce al ControladorSonidos.
+//   · Solo conoce al GameManager.
+//
+// Patrón:  Observador — es notificado por GameManager (Desbloquear) y
+//          a su vez notifica al GameManager los eventos de interacción.
+//
+// SETUP EN UNITY:
+//   1. Agrega este script al GameObject de la puerta.
+//   2. Agrega "XR Simple Interactable" al mismo GameObject.
+//   3. El GameObject necesita un Collider (Is Trigger = ❌).
+//   4. Arrastra el Animator de la puerta al campo "Animator Puerta".
+//   5. Arrastra este script al campo "Puerta" en el GameManager.
+// ═══════════════════════════════════════════════════════════════════════════════
+
 [RequireComponent(typeof(XRSimpleInteractable))]
 public class ControlPuerta : MonoBehaviour
 {
-    // ── Estado y lógica ───────────────────────────────────────────────────────
-    [Header("Estado")]
-    [Tooltip("Si está activo, la puerta arrancará abierta.")]
-    public bool abiertoAlInicio = false;
+    // ── Animación ─────────────────────────────────────────────────────────────
 
-    // ── Animación manual ──────────────────────────────────────────────────────
-    [Header("Animación de Apertura")]
-    [Tooltip("Si tienes Animator, arrástralo aquí. Si no, se usará animación manual.")]
+    [Header("─── Animación ──────────────────────────────────")]
+    [Tooltip("Animator de la puerta. Arrastra aquí el componente Animator.")]
     public Animator animadorPuerta;
 
-    [Tooltip("Nombre del parámetro bool en el Animator.")]
+    [Tooltip("Nombre exacto del parámetro bool en el Animator.\n" +
+             "Debe coincidir letra a letra con el Animator Controller.")]
     public string parametroAnimator = "Abierta";
 
-    [Tooltip("Activa la animación manual si NO usas Animator.")]
-    public bool usarAnimacionManual = true;
+    // ── Feedback visual (Hover del Ray) ───────────────────────────────────────
 
-    [Tooltip("Posición local de la puerta cuando está ABIERTA.")]
-    public Vector3 posicionAbierta = new Vector3(0f, 3f, 0f);
-
-    [Tooltip("Posición local de la puerta cuando está CERRADA.")]
-    public Vector3 posicionCerrada = Vector3.zero;
-
-    [Tooltip("Velocidad de la animación manual.")]
-    public float velocidadAnimacion = 2f;
-
-    // ── Audio ─────────────────────────────────────────────────────────────────
-    [Header("Audio")]
-    public AudioSource audioSourcePuerta;
-    public AudioClip sonidoAbrir;
-    public AudioClip sonidoCerrar;
-    public AudioClip sonidoBloqueada;
-
-    // ── Feedback visual del Ray ───────────────────────────────────────────────
-    [Header("Feedback Visual (Hover)")]
-    [Tooltip("Material que se aplica cuando el ray apunta a la puerta.")]
+    [Header("─── Feedback Visual ─────────────────────────────")]
+    [Tooltip("Material que se aplica cuando el ray XR apunta a la puerta.\n" +
+             "Deja vacío si no quieres feedback visual.")]
     public Material materialHighlight;
 
-    [Tooltip("Material original de la puerta (se restaura al salir del hover).")]
+    [Tooltip("Material original. Se restaura al salir del hover.\n" +
+             "Si queda vacío, se captura automáticamente en Start().")]
     public Material materialOriginal;
 
-    [Tooltip("Renderer de la puerta para el highlight.")]
+    [Tooltip("Renderer de la puerta. Si queda vacío, se busca automáticamente.")]
     public Renderer rendererPuerta;
 
     // ── Estado interno ────────────────────────────────────────────────────────
-    private bool estaAbierta = false;
-    private bool puedoAbrir = false;        // true cuando se recolectan todos los objetos
-    private Coroutine corutinaAnimacion;
+    private bool estaAbierta  = false;
+    private bool desbloqueada = false;
     private XRSimpleInteractable interactable;
 
     // ─────────────────────────────────────────────────────────────────────────
     void Awake()
     {
-        // Obtener y conectar el XRSimpleInteractable automáticamente
         interactable = GetComponent<XRSimpleInteractable>();
-
-        // SelectEntered = cuando el jugador hace click/trigger apuntando a la puerta
         interactable.selectEntered.AddListener(OnRayClick);
-
-        // HoverEntered / Exited = cuando el ray pasa por encima
         interactable.hoverEntered.AddListener(OnRayEnter);
         interactable.hoverExited.AddListener(OnRayExit);
     }
 
     void Start()
     {
-        estaAbierta = abiertoAlInicio;
-
         if (rendererPuerta == null)
             rendererPuerta = GetComponentInChildren<Renderer>();
 
-        // Guardar material original si no fue asignado
         if (materialOriginal == null && rendererPuerta != null)
             materialOriginal = rendererPuerta.material;
 
-        // Aplicar estado inicial
-        if (estaAbierta)
-            AbrirPuerta();
-        else
-            PuertaBloqueada();
+        if (animadorPuerta == null)
+            Debug.LogWarning($"[ControlPuerta] '{name}': No tiene Animator asignado.");
     }
 
     void OnDestroy()
     {
-        // Siempre limpiar listeners para evitar memory leaks
         if (interactable != null)
         {
             interactable.selectEntered.RemoveListener(OnRayClick);
@@ -111,33 +92,30 @@ public class ControlPuerta : MonoBehaviour
     // ── Eventos XR ────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Se llama cuando el jugador apunta con el ray y presiona el trigger/click.
+    /// El jugador apunta con el ray y presiona el trigger del control.
+    /// Si está bloqueada: notifica al GameManager → él ordena el sonido.
+    /// Si está desbloqueada: alterna la puerta → notifica al GameManager → él ordena el sonido.
     /// </summary>
     private void OnRayClick(SelectEnterEventArgs args)
     {
-        if (!puedoAbrir)
+        if (!desbloqueada)
         {
-            // Feedback: puerta bloqueada
-            ReproducirSonido(sonidoBloqueada);
-            Debug.Log("[ControlPuerta] Puerta bloqueada. Recoge todos los objetos primero.");
+            GameManager.Instancia?.NotificarIntentoPuertaBloqueada();
+            Debug.Log($"[ControlPuerta] '{name}': Bloqueada.");
             return;
         }
 
         AlternarPuerta();
     }
 
-    /// <summary>
-    /// Feedback visual cuando el ray entra en hover sobre la puerta.
-    /// </summary>
+    /// <summary>Aplica el material highlight cuando el ray entra en hover.</summary>
     private void OnRayEnter(HoverEnterEventArgs args)
     {
         if (materialHighlight != null && rendererPuerta != null)
             rendererPuerta.material = materialHighlight;
     }
 
-    /// <summary>
-    /// Restaura el material original cuando el ray deja de apuntar.
-    /// </summary>
+    /// <summary>Restaura el material original cuando el ray sale del hover.</summary>
     private void OnRayExit(HoverExitEventArgs args)
     {
         if (materialOriginal != null && rendererPuerta != null)
@@ -147,105 +125,50 @@ public class ControlPuerta : MonoBehaviour
     // ── API pública ───────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Alterna entre abrir y cerrar la puerta.
+    /// Llamado por el GameManager cuando el jugador completó los objetos necesarios.
+    /// Marca la puerta como desbloqueada y la abre automáticamente.
     /// </summary>
+    public void Desbloquear()
+    {
+        desbloqueada = true;
+        Debug.Log($"[ControlPuerta] '{name}': ¡Desbloqueada!");
+        AbrirPuerta();
+    }
+
+    /// <summary>Alterna entre abrir y cerrar. Solo funciona si está desbloqueada.</summary>
     public void AlternarPuerta()
     {
-        if (estaAbierta)
-            CerrarPuerta();
-        else
-            AbrirPuerta();
+        if (estaAbierta) CerrarPuerta();
+        else             AbrirPuerta();
     }
 
     /// <summary>
-    /// La puerta está bloqueada porque el jugador no tiene todos los objetos.
-    /// Llamado por GestorRecolectables mientras falten objetos.
-    /// </summary>
-    public void PuertaBloqueada()
-    {
-        puedoAbrir = false;
-        estaAbierta = false;
-        Debug.Log("[ControlPuerta] Estado: BLOQUEADA ");
-        //ReproducirSonido(sonidoBloqueada);
-
-        if (animadorPuerta != null)
-            animadorPuerta.SetBool(parametroAnimator, false);
-        else if (usarAnimacionManual)
-        {
-            if (corutinaAnimacion != null) StopCoroutine(corutinaAnimacion);
-            corutinaAnimacion = StartCoroutine(MoverPuerta(posicionCerrada));
-        }
-    }
-
-    /// <summary>
-    /// Desbloquea y abre la puerta. Llamado por GestorRecolectables al completar colección.
+    /// Abre la puerta: notifica al GameManager y ejecuta la animación via Animator.
     /// </summary>
     public void AbrirPuerta()
     {
-        puedoAbrir = true;
-
         if (estaAbierta) return;
         estaAbierta = true;
 
-        Debug.Log("[ControlPuerta] ¡Abriendo puerta! 🚪✅");
-        ReproducirSonido(sonidoAbrir);
-
-        if (animadorPuerta != null)
-        {
-            animadorPuerta.SetBool(parametroAnimator, true);
-        }
-        else if (usarAnimacionManual)
-        {
-            if (corutinaAnimacion != null) StopCoroutine(corutinaAnimacion);
-            corutinaAnimacion = StartCoroutine(MoverPuerta(posicionAbierta));
-        }
+        Debug.Log($"[ControlPuerta] '{name}': Abriendo...");
+        GameManager.Instancia?.NotificarPuertaAbierta();
+        animadorPuerta?.SetBool(parametroAnimator, true);
     }
 
     /// <summary>
-    /// Cierra la puerta (solo si ya estaba desbloqueada).
+    /// Cierra la puerta: notifica al GameManager y ejecuta la animación via Animator.
     /// </summary>
     public void CerrarPuerta()
     {
-        if (!puedoAbrir || !estaAbierta) return;
+        if (!estaAbierta || !desbloqueada) return;
         estaAbierta = false;
 
-        Debug.Log("[ControlPuerta] Cerrando puerta... 🚪");
-        ReproducirSonido(sonidoCerrar);
-
-        if (animadorPuerta != null)
-        {
-            animadorPuerta.SetBool(parametroAnimator, false);
-        }
-        else if (usarAnimacionManual)
-        {
-            if (corutinaAnimacion != null) StopCoroutine(corutinaAnimacion);
-            corutinaAnimacion = StartCoroutine(MoverPuerta(posicionCerrada));
-        }
-    }
-
-    // ── Animación manual ──────────────────────────────────────────────────────
-    private IEnumerator MoverPuerta(Vector3 destino)
-    {
-        while (Vector3.Distance(transform.localPosition, destino) > 0.01f)
-        {
-            transform.localPosition = Vector3.MoveTowards(
-                transform.localPosition,
-                destino,
-                velocidadAnimacion * Time.deltaTime
-            );
-            yield return null;
-        }
-        transform.localPosition = destino;
-    }
-
-    // ── Audio ─────────────────────────────────────────────────────────────────
-    private void ReproducirSonido(AudioClip clip)
-    {
-        if (audioSourcePuerta != null && clip != null)
-            audioSourcePuerta.PlayOneShot(clip);
+        Debug.Log($"[ControlPuerta] '{name}': Cerrando...");
+        GameManager.Instancia?.NotificarPuertaCerrada();
+        animadorPuerta?.SetBool(parametroAnimator, false);
     }
 
     // ── Accesores ─────────────────────────────────────────────────────────────
-    public bool EstaAbierta => estaAbierta;
-    public bool PuedoAbrir => puedoAbrir;
+    public bool EstaAbierta  => estaAbierta;
+    public bool Desbloqueada => desbloqueada;
 }
