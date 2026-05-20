@@ -216,6 +216,6 @@ public class ControladorRecolectables : MonoBehaviour
         else
             Debug.LogError("[ControladorRecolectables] No se encontró GameManager.");
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 0f);
     }
 }
